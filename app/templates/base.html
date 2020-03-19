@@ -1,0 +1,33 @@
+{% extends 'bootstrap/base.html' %}
+
+{% block title %}
+    {% if title %}{{ title }} - DOCVER{% else %}DOCVER{% endif %}
+{% endblock %}
+
+{% block navbar %}
+    <nav class="navbar navbar-default">
+      Navigation Bar:
+      <a href="{{ url_for('mainpage') }}"> Home </a>
+      <a href="{{ url_for('edit') }}"> Add a Doc </a>
+      <a href="{{ url_for('aboutus') }}"> About Us </a>
+      <a href="{{ url_for('contactus') }}"> Contact Us </a>
+      {% if current_user.is_anonymous %}
+      <a href="{{ url_for('login') }}"> Login </a>
+      {% else %}
+      <a href="{{ url_for('logout') }}">Logout</a>
+      {% endif %}
+    </nav>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-info" role="alert">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+        {% block app_content %}{% endblock %}
+    </div>
+{% endblock %}
