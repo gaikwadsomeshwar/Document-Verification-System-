@@ -30,6 +30,9 @@ class Aadhar(UserMixin, db.Model):
     def check_data(self, did, fn, ln):
         return (check_password_hash(self.docid, did) and check_password_hash(self.firstname, fn) and check_password_hash(self.lastname, ln))
 
+    def check_docid(self, did):
+        return check_password_hash(self.docid, did)
+
 class PAN(UserMixin, db.Model):
     __bind_key__ = 'pan'
     id = db.Column(db.Integer, primary_key=True)
@@ -44,6 +47,9 @@ class PAN(UserMixin, db.Model):
 
     def check_data(self, did, fn, ln):
         return (check_password_hash(self.docid, did) and check_password_hash(self.firstname, fn) and check_password_hash(self.lastname, ln))
+
+    def check_docid(self, did):
+        return check_password_hash(self.docid, did)
 
 @login.user_loader
 def load_user(id):

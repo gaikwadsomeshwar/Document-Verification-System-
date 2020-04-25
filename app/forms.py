@@ -36,7 +36,7 @@ class VerificationForm(FlaskForm):
 
 class EditForm(FlaskForm):
     type = SelectField('Doc Type',[DataRequired()], choices=[('Aadhar Card', 'Aadhar Card'), ('PAN Card', 'PAN Card')])
-    id = StringField('DOC ID', validators=[DataRequired()])
+    docid = StringField('DOC ID', validators=[DataRequired()])
     firstname = StringField('First Name', validators=[DataRequired()])
     lastname = StringField('Last Name', validators=[DataRequired()])
     submit = SubmitField('Add')

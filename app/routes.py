@@ -54,6 +54,7 @@ def logout():
     return redirect(url_for('mainpage'))
 
 @app.route('/register', methods=['GET', 'POST'])
+@login_required
 def register():
     if current_user.is_authenticated:
         return redirect(url_for('register'))
@@ -73,9 +74,15 @@ def edit():
     form = EditForm()
     if form.validate_on_submit():
         doc = PAN()
+        docs = PAN.query.all()
         if(form.type.data=='Aadhar Card'):
             doc = Aadhar()
-        doc.set_data(form.id.data, form.firstname.data, form.lastname.data)
+            docs = Aadhar.query.all()
+        doc.set_data(form.docid.data, form.firstname.data, form.lastname.data)
+        for d in docs:
+            if(d.check_docid(form.docid.data)):
+                flash("Document Already Exists")
+                return redirect(url_for('edit'))
         db.session.add(doc)
         db.session.commit()
         flash('Document Added Succesfully')
